@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -e
+
+rm -f /tmp/git-branches-to-delete-working
+rm -f /tmp/git-branches-to-delete
+
+export LANG=en_US.UTF-8
+
+git fetch --prune --all
+
+echo "# List of branches to delete, remove the line or add # at the beginning to ignore it" > /tmp/git-branches-to-delete-working
+
+git branch -vv | awk '/: gone]/{print $1}' >> /tmp/git-branches-to-delete-working
+git branch -vv | grep -v "^*" | awk '/^[^\]]+$/{print $1}' >> /tmp/git-branches-to-delete-working
+
+if [[ "$(cat /tmp/git-branches-to-delete-working | wc -l)" -ne 1 ]]
+then
+  ${EDITOR} /tmp/git-branches-to-delete-working
+
+  cat /tmp/git-branches-to-delete-working | grep -v "^#" > /tmp/git-branches-to-delete
+
+  echo "Branches to delete:"
+  cat /tmp/git-branches-to-delete
+
+  if [[ "$(cat /tmp/git-branches-to-delete | wc -l)" -ne 0 ]]
+  then
+    read -p "Confirm (y=yes, n=no, f=force): " confirm
+
+    if [[ "${confirm}" == "f" ]]
+    then
+      xargs git branch --delete --force < /tmp/git-branches-to-delete
+      echo "Force cleaned"
+    elif [[ "${confirm}" == "y" ]]
+    then
+      xargs git branch --delete < /tmp/git-branches-to-delete
+      echo "Cleaned"
+    else
+      echo "Aborted"
+    fi
+  else
+    echo "No branch to delete"
+  fi
+else
+  echo "No branch to delete"
+fi
