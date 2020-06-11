@@ -16,7 +16,7 @@ git branch -vv | grep -v "^*" | awk '/^[^\]]+$/{print $1}' >> /tmp/git-branches-
 
 if [[ "$(cat /tmp/git-branches-to-delete-working | wc -l)" -ne 1 ]]
 then
-  ${EDITOR} /tmp/git-branches-to-delete-working
+  ${EDITOR:-nano} /tmp/git-branches-to-delete-working
 
   cat /tmp/git-branches-to-delete-working | grep -v "^#" > /tmp/git-branches-to-delete
 

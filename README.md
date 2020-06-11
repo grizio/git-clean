@@ -1,4 +1,4 @@
-# git-clean 🧹
+# git-cleanup 🧹
 
 A simple script to clean your remote local branches without a remote one.
 
@@ -7,13 +7,13 @@ A simple script to clean your remote local branches without a remote one.
 Download the script:
 
 ```
-curl https://raw.githubusercontent.com/grizio/git-clean/master/git-cleanup > git-cleanup
+curl https://raw.githubusercontent.com/grizio/git-cleanup/master/git-cleanup > git-cleanup
 ```
 
 Use it:
 
 ```
-./git-clean
+./git-cleanup
 ```
 
 ## Other tricks
@@ -21,12 +21,12 @@ Use it:
 ### Add this script globally
 
 ```
-cp git-cleanup /usr/local/bin/
+curl https://raw.githubusercontent.com/grizio/git-cleanup/master/git-cleanup > /usr/local/bin/git-cleanup
 ```
 
 ### Use it as a git command
 
-Once the script is in `/usr/local/bin` (and named `git-cleanup`), you can use it as a git command:
+Once the script is in `/usr/local/bin` or anywhere in your `${PATH}`, you can use it as a git command:
 
 ```
 git cleanup
@@ -38,7 +38,7 @@ Instead of forcing the deletion of all your branches, you can review the branche
 
 ## Troubleshooting
 
-Please open an issue on https://github.com/grizio/git-clean/issues
+Please open an issue on https://github.com/grizio/git-cleanup/issues
 
 ## Contributing
 
